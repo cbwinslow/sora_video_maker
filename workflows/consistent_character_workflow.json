@@ -1,0 +1,190 @@
+{
+  "last_node_id": 30,
+  "last_link_id": 50,
+  "nodes": [
+    {
+      "id": 1,
+      "type": "CheckpointLoaderSimple",
+      "pos": [50, 100],
+      "outputs": [
+        {"name": "MODEL", "type": "MODEL", "links": [1]},
+        {"name": "CLIP", "type": "CLIP", "links": [2, 3]},
+        {"name": "VAE", "type": "VAE", "links": [4]}
+      ],
+      "widgets_values": ["sd_xl_base_1.0.safetensors"]
+    },
+    {
+      "id": 2,
+      "type": "CLIPTextEncode",
+      "pos": [400, 100],
+      "inputs": [
+        {"name": "clip", "type": "CLIP", "link": 2}
+      ],
+      "outputs": [
+        {"name": "CONDITIONING", "type": "CONDITIONING", "links": [5]}
+      ],
+      "widgets_values": [
+        "reference character, consistent face, same person throughout, detailed features, high quality, cinematic"
+      ]
+    },
+    {
+      "id": 3,
+      "type": "CLIPTextEncode",
+      "pos": [400, 300],
+      "inputs": [
+        {"name": "clip", "type": "CLIP", "link": 3}
+      ],
+      "outputs": [
+        {"name": "CONDITIONING", "type": "CONDITIONING", "links": [6]}
+      ],
+      "widgets_values": [
+        "inconsistent face, different person, multiple people, blurry"
+      ]
+    },
+    {
+      "id": 4,
+      "type": "LoadImage",
+      "pos": [50, 300],
+      "outputs": [
+        {"name": "IMAGE", "type": "IMAGE", "links": [7]},
+        {"name": "MASK", "type": "MASK", "links": []}
+      ],
+      "widgets_values": ["reference_face.png", "image"]
+    },
+    {
+      "id": 5,
+      "type": "IPAdapterUnifiedLoader",
+      "pos": [400, 500],
+      "inputs": [
+        {"name": "model", "type": "MODEL", "link": 1}
+      ],
+      "outputs": [
+        {"name": "MODEL", "type": "MODEL", "links": [8]},
+        {"name": "ipadapter", "type": "IPADAPTER", "links": [9]}
+      ],
+      "widgets_values": ["PLUS (high strength)"]
+    },
+    {
+      "id": 6,
+      "type": "IPAdapterApply",
+      "pos": [700, 300],
+      "inputs": [
+        {"name": "ipadapter", "type": "IPADAPTER", "link": 9},
+        {"name": "model", "type": "MODEL", "link": 8},
+        {"name": "image", "type": "IMAGE", "link": 7}
+      ],
+      "outputs": [
+        {"name": "MODEL", "type": "MODEL", "links": [10]}
+      ],
+      "widgets_values": [1.0, 0.0, "standard"]
+    },
+    {
+      "id": 7,
+      "type": "ControlNetLoader",
+      "pos": [50, 500],
+      "outputs": [
+        {"name": "CONTROL_NET", "type": "CONTROL_NET", "links": [11]}
+      ],
+      "widgets_values": ["control_openpose.pth"]
+    },
+    {
+      "id": 8,
+      "type": "LoadImage",
+      "pos": [50, 650],
+      "outputs": [
+        {"name": "IMAGE", "type": "IMAGE", "links": [12]},
+        {"name": "MASK", "type": "MASK", "links": []}
+      ],
+      "widgets_values": ["pose_reference.png", "image"]
+    },
+    {
+      "id": 9,
+      "type": "ControlNetApply",
+      "pos": [400, 700],
+      "inputs": [
+        {"name": "conditioning", "type": "CONDITIONING", "link": 5},
+        {"name": "control_net", "type": "CONTROL_NET", "link": 11},
+        {"name": "image", "type": "IMAGE", "link": 12}
+      ],
+      "outputs": [
+        {"name": "CONDITIONING", "type": "CONDITIONING", "links": [13]}
+      ],
+      "widgets_values": [1.0]
+    },
+    {
+      "id": 10,
+      "type": "KSampler",
+      "pos": [1000, 300],
+      "inputs": [
+        {"name": "model", "type": "MODEL", "link": 10},
+        {"name": "positive", "type": "CONDITIONING", "link": 13},
+        {"name": "negative", "type": "CONDITIONING", "link": 6},
+        {"name": "latent_image", "type": "LATENT", "link": 14}
+      ],
+      "outputs": [
+        {"name": "LATENT", "type": "LATENT", "links": [15]}
+      ],
+      "widgets_values": [
+        0,
+        "fixed",
+        20,
+        7.5,
+        "euler",
+        "normal",
+        1.0
+      ]
+    },
+    {
+      "id": 11,
+      "type": "EmptyLatentImage",
+      "pos": [700, 600],
+      "outputs": [
+        {"name": "LATENT", "type": "LATENT", "links": [14]}
+      ],
+      "widgets_values": [512, 512, 1]
+    },
+    {
+      "id": 12,
+      "type": "VAEDecode",
+      "pos": [1300, 300],
+      "inputs": [
+        {"name": "samples", "type": "LATENT", "link": 15},
+        {"name": "vae", "type": "VAE", "link": 4}
+      ],
+      "outputs": [
+        {"name": "IMAGE", "type": "IMAGE", "links": [16]}
+      ]
+    },
+    {
+      "id": 13,
+      "type": "SaveImage",
+      "pos": [1550, 300],
+      "inputs": [
+        {"name": "images", "type": "IMAGE", "link": 16}
+      ],
+      "widgets_values": ["consistent_character"]
+    }
+  ],
+  "links": [
+    [1, 1, 0, 5, 0, "MODEL"],
+    [2, 1, 1, 2, 0, "CLIP"],
+    [3, 1, 1, 3, 0, "CLIP"],
+    [4, 1, 2, 12, 1, "VAE"],
+    [5, 2, 0, 9, 0, "CONDITIONING"],
+    [6, 3, 0, 10, 2, "CONDITIONING"],
+    [7, 4, 0, 6, 2, "IMAGE"],
+    [8, 5, 0, 6, 1, "MODEL"],
+    [9, 5, 1, 6, 0, "IPADAPTER"],
+    [10, 6, 0, 10, 0, "MODEL"],
+    [11, 7, 0, 9, 1, "CONTROL_NET"],
+    [12, 8, 0, 9, 2, "IMAGE"],
+    [13, 9, 0, 10, 1, "CONDITIONING"],
+    [14, 11, 0, 10, 3, "LATENT"],
+    [15, 10, 0, 12, 0, "LATENT"],
+    [16, 12, 0, 13, 0, "IMAGE"]
+  ],
+  "groups": [],
+  "config": {},
+  "extra": {},
+  "version": 0.4
+}

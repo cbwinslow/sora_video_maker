@@ -36,3 +36,7 @@ schedule>=1.2.0
 
 # Database (optional, for tracking generated videos)
 sqlalchemy>=2.0.0
+
+# Additional tools for advanced features
+psutil>=5.9.0
+watchdog>=3.0.0
