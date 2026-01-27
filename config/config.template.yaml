@@ -1,0 +1,69 @@
+# Video Generation Toolkit Configuration Template
+# Copy this file to config.yaml and fill in your API keys
+
+# API Keys and Credentials
+api_keys:
+  openai: "YOUR_OPENAI_API_KEY_HERE"  # For Sora API (when available)
+  openrouter: "YOUR_OPENROUTER_API_KEY_HERE"  # For OpenRouter free models
+  anthropic: "YOUR_ANTHROPIC_API_KEY_HERE"  # Optional
+  huggingface: "YOUR_HUGGINGFACE_TOKEN_HERE"  # Optional, for model downloads
+  
+# YouTube Upload Configuration
+youtube:
+  enabled: false
+  client_secrets_file: "config/client_secrets.json"
+  credentials_file: "config/youtube_credentials.json"
+
+# Video Generation Settings
+video_generation:
+  default_resolution: "1920x1080"
+  default_fps: 30
+  default_duration: 10  # seconds
+  output_format: "mp4"
+  output_directory: "output/videos"
+
+# ComfyUI Settings
+comfyui:
+  host: "127.0.0.1"
+  port: 8188
+  workflows_directory: "workflows"
+
+# Ollama Settings
+ollama:
+  host: "http://localhost:11434"
+  default_model: "llama2"
+  models:
+    - "llama2"
+    - "mistral"
+    - "codellama"
+
+# Trending Topics Research
+research:
+  sources:
+    - "reddit"
+    - "twitter"
+    - "youtube"
+    - "google_trends"
+  update_interval: 3600  # seconds
+  topics_to_track: 10
+
+# Video Upload Schedule
+upload:
+  enabled: false
+  schedule: "daily"  # daily, hourly, etc.
+  platforms:
+    - "youtube"
+  max_videos_per_day: 5
+
+# Logging
+logging:
+  level: "INFO"  # DEBUG, INFO, WARNING, ERROR
+  file: "logs/video_toolkit.log"
+  max_size_mb: 100
+
+# Workflow Settings
+workflow:
+  auto_generate: false
+  auto_upload: false
+  temp_directory: "temp"
+  keep_temp_files: false

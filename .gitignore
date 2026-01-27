@@ -1,0 +1,118 @@
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+venv/
+env/
+ENV/
+build/
+develop-eggs/
+dist/
+downloads/
+eggs/
+.eggs/
+lib/
+lib64/
+parts/
+sdist/
+var/
+wheels/
+*.egg-info/
+.installed.cfg
+*.egg
+
+# Virtual Environment
+venv/
+ENV/
+env/
+
+# IDEs
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+.DS_Store
+
+# Logs
+logs/
+*.log
+
+# Output files
+output/
+temp/
+tmp/
+
+# Configuration (keep template)
+config/config.yaml
+config/client_secrets.json
+config/youtube_credentials.json
+*.env
+
+# ComfyUI
+ComfyUI/
+models/
+checkpoints/
+
+# API Keys and Secrets
+.env
+*.key
+*.pem
+secrets.yaml
+
+# Video files
+*.mp4
+*.avi
+*.mov
+*.mkv
+*.flv
+*.wmv
+
+# Image files (in output directories)
+output/**/*.png
+output/**/*.jpg
+output/**/*.jpeg
+output/**/*.gif
+
+# Audio files
+*.mp3
+*.wav
+*.aac
+*.flac
+
+# Database
+*.db
+*.sqlite
+*.sqlite3
+
+# Temporary files
+*.tmp
+*.bak
+*.swp
+*.swo
+
+# OS files
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# Build artifacts
+*.pyc
+__pycache__/
+.pytest_cache/
+.coverage
+htmlcov/
+
+# Node modules (if any JavaScript tools are added)
+node_modules/
+package-lock.json
+
+# Large model files
+*.safetensors
+*.ckpt
+*.pt
+*.pth
+*.bin
+*.onnx
