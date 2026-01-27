@@ -1,0 +1,38 @@
+# Core dependencies
+requests>=2.31.0
+aiohttp>=3.9.0
+python-dotenv>=1.0.0
+pyyaml>=6.0.1
+
+# Video processing
+moviepy>=1.0.3
+opencv-python>=4.8.0
+Pillow>=10.0.0
+imageio>=2.31.0
+imageio-ffmpeg>=0.4.9
+
+# AI/ML libraries
+torch>=2.0.0
+torchvision>=0.15.0
+transformers>=4.30.0
+accelerate>=0.20.0
+diffusers>=0.21.0
+
+# Web scraping and data collection
+beautifulsoup4>=4.12.0
+lxml>=4.9.0
+feedparser>=6.0.10
+yt-dlp>=2023.10.0
+
+# API clients
+openai>=1.0.0
+anthropic>=0.3.0
+
+# Utilities
+python-slugify>=8.0.0
+tqdm>=4.66.0
+colorama>=0.4.6
+schedule>=1.2.0
+
+# Database (optional, for tracking generated videos)
+sqlalchemy>=2.0.0
