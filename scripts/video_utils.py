@@ -5,7 +5,7 @@ Utility functions for video processing and manipulation
 import os
 import subprocess
 import logging
-from typing import Optional, Tuple, List
+from typing import Optional, Tuple, List, Dict
 from pathlib import Path
 
 logging.basicConfig(level=logging.INFO)

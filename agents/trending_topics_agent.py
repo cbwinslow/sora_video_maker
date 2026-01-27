@@ -8,12 +8,33 @@ content opportunities for video generation.
 import asyncio
 import aiohttp
 from datetime import datetime
-from typing import List, Dict
+from typing import List, Dict, Optional
 import json
 import logging
+from functools import wraps
+import time
 
 logging.basicConfig(level=logging.INFO)
 logger = logging.getLogger(__name__)
+
+
+def retry_on_failure(max_retries: int = 3, delay: float = 1.0):
+    """Decorator to retry failed async operations"""
+    def decorator(func):
+        @wraps(func)
+        async def wrapper(*args, **kwargs):
+            for attempt in range(max_retries):
+                try:
+                    return await func(*args, **kwargs)
+                except Exception as e:
+                    if attempt == max_retries - 1:
+                        logger.error(f"Failed after {max_retries} attempts: {e}")
+                        raise
+                    logger.warning(f"Attempt {attempt + 1} failed, retrying in {delay}s...")
+                    await asyncio.sleep(delay * (attempt + 1))
+            return None
+        return wrapper
+    return decorator
 
 
 class TrendingTopicsAgent:
@@ -23,14 +44,37 @@ class TrendingTopicsAgent:
         self.config = config
         self.sources = config.get('research', {}).get('sources', [])
         self.topics_to_track = config.get('research', {}).get('topics_to_track', 10)
+        self._request_count = 0
+        self._last_request_time = 0
+        self._rate_limit_delay = 1.0  # Minimum delay between requests
         
+    async def _rate_limit(self):
+        """Implement rate limiting for API calls"""
+        current_time = time.time()
+        time_since_last = current_time - self._last_request_time
+        
+        if time_since_last < self._rate_limit_delay:
+            await asyncio.sleep(self._rate_limit_delay - time_since_last)
+        
+        self._last_request_time = time.time()
+        self._request_count += 1
+    
+    def _validate_trend(self, trend: Dict) -> bool:
+        """Validate trend data structure"""
+        required_fields = ['source', 'timestamp']
+        return all(field in trend for field in required_fields)
+    
+    @retry_on_failure(max_retries=3, delay=2.0)
     async def fetch_reddit_trends(self) -> List[Dict]:
-        """Fetch trending topics from Reddit"""
+        """Fetch trending topics from Reddit with retry logic"""
+        await self._rate_limit()
+        
         try:
             url = "https://www.reddit.com/r/all/hot.json?limit=25"
             headers = {'User-Agent': 'VideoGenerationToolkit/1.0'}
             
-            async with aiohttp.ClientSession() as session:
+            timeout = aiohttp.ClientTimeout(total=30)
+            async with aiohttp.ClientSession(timeout=timeout) as session:
                 async with session.get(url, headers=headers) as response:
                     if response.status == 200:
                         data = await response.json()
@@ -39,20 +83,28 @@ class TrendingTopicsAgent:
                         trends = []
                         for post in posts[:self.topics_to_track]:
                             post_data = post.get('data', {})
-                            trends.append({
+                            trend = {
                                 'source': 'reddit',
                                 'title': post_data.get('title', ''),
                                 'subreddit': post_data.get('subreddit', ''),
                                 'score': post_data.get('score', 0),
                                 'url': post_data.get('url', ''),
-                                'timestamp': datetime.now().isoformat()
-                            })
+                                'timestamp': datetime.now().isoformat(),
+                                'num_comments': post_data.get('num_comments', 0),
+                                'upvote_ratio': post_data.get('upvote_ratio', 0.0)
+                            }
+                            
+                            if self._validate_trend(trend):
+                                trends.append(trend)
                         
                         logger.info(f"Fetched {len(trends)} trends from Reddit")
                         return trends
                     else:
                         logger.error(f"Reddit API returned status {response.status}")
                         return []
+        except asyncio.TimeoutError:
+            logger.error("Reddit API request timed out")
+            return []
         except Exception as e:
             logger.error(f"Error fetching Reddit trends: {e}")
             return []

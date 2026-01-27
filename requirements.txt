@@ -40,3 +40,11 @@ sqlalchemy>=2.0.0
 # Additional tools for advanced features
 psutil>=5.9.0
 watchdog>=3.0.0
+
+# Testing dependencies
+pytest>=7.4.0
+pytest-asyncio>=0.21.0
+pytest-cov>=4.1.0
+pytest-mock>=3.11.0
+pytest-timeout>=2.1.0
+coverage>=7.3.0
