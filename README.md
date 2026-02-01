@@ -163,18 +163,51 @@ results = await upload_agent.upload_video(result['video_path'], metadata)
 
 ### Running Tests
 
-```bash
-# Test all connections
-python examples/test_connections.py
+Comprehensive test suite with agent communication tests:
 
-# Test individual components
-python agents/trending_topics_agent.py
-python agents/video_generation_agent.py
+```bash
+# Quick test run
+./run_tests.sh
+
+# Run with coverage report
+./run_tests.sh --coverage
+
+# Run only unit tests
+./run_tests.sh --unit
+
+# Run only integration tests
+./run_tests.sh --integration
+
+# Run all tests including slow ones
+./run_tests.sh --all --verbose
+```
+
+### Test Categories
+
+- **Initialization Tests**: 100% coverage of agent, crew, and orchestrator initialization
+- **Agent Communication Tests**: Tests for agent-to-agent communication and coordination
+- **System Integration Tests**: File system, web services, and system resource access
+- **Unit Tests**: Individual component functionality
+- **Integration Tests**: End-to-end workflow tests
+
+See [Comprehensive Testing Guide](docs/COMPREHENSIVE_TESTING.md) for details.
+
+### Service Health Check
+
+Check the status of all services:
+
+```bash
+./check_services.sh
 ```
 
 ### Starting Services
 
 ```bash
+# Using systemd (Linux)
+sudo systemctl start comfyui@$USER
+sudo systemctl start ollama@$USER
+
+# Or manually
 # Start ComfyUI
 cd ComfyUI
 python main.py
@@ -183,8 +216,21 @@ python main.py
 ollama serve
 ```
 
+For systemd setup, see [systemd services documentation](install/systemd/README.md).
+
 ## 📝 TODO / Future Enhancements
 
+See [TASKS.md](TASKS.md) for comprehensive task tracking including:
+
+- Agent communication & swarm improvements
+- Testing coverage goals
+- Platform integrations
+- Infrastructure enhancements
+- Documentation needs
+
+Quick highlights:
+- [ ] Complete OpenAI Swarm integration
+- [ ] Achieve 100% test coverage for agents
 - [ ] Add TikTok upload support
 - [ ] Add Instagram Reels upload support
 - [ ] Implement Sora API integration when available
