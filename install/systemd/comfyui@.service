@@ -1,0 +1,17 @@
+[Unit]
+Description=ComfyUI Service for Video Generation
+After=network.target
+
+[Service]
+Type=simple
+User=%i
+WorkingDirectory=/home/%i/ComfyUI
+Environment="PATH=/home/%i/ComfyUI/venv/bin:/usr/local/bin:/usr/bin:/bin"
+ExecStart=/home/%i/ComfyUI/venv/bin/python main.py --listen 127.0.0.1 --port 8188
+Restart=always
+RestartSec=10
+StandardOutput=journal
+StandardError=journal
+
+[Install]
+WantedBy=multi-user.target
