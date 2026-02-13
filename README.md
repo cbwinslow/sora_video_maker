@@ -5,7 +5,11 @@ A comprehensive, automated video generation toolkit that integrates multiple AI 
 ## 🌟 Features
 
 - **🔍 Automated Research**: Discover trending topics from Reddit, YouTube, Google Trends, and more
-- **🎬 Multi-Platform Generation**: Integrate Sora, ComfyUI, OpenRouter, Ollama, and other AI platforms
+- **🎬 Multi-Platform Generation**: Integrate Sora, ComfyUI, OpenRouter, Ollama, Gemini, DALL-E and other AI platforms
+- **📱 YouTube Shorts**: Create, analyze, and optimize Shorts from any video
+- **🎨 Image Inpainting**: Modify images with AI-powered inpainting workflows
+- **✨ Prompt Enhancement**: AI agent that expands simple prompts into detailed, production-ready prompts
+- **📊 Video Analysis**: Comprehensive video analysis with quality assessment and recommendations
 - **🛠️ Video Processing**: Complete suite of video editing utilities using FFmpeg
 - **📤 Automated Upload**: Schedule and upload videos to YouTube and other platforms
 - **⚡ ComfyUI Workflows**: Pre-configured workflows for image and video generation
@@ -46,6 +50,12 @@ nano config/config.yaml
 # Test your setup
 python examples/test_connections.py
 
+# Create YouTube Shorts from video
+python examples/create_shorts.py
+
+# Enhance prompts with AI
+python examples/prompt_enhancement_demo.py
+
 # Research trending topics
 python main.py --research-only
 
@@ -59,30 +69,47 @@ python examples/basic_workflow.py
 ## 📦 What's Included
 
 ### Installation Scripts
-- `install/install_all.sh` - Master installation script
+- `install/install_all.sh` - Master installation script with optional platforms
 - `install/install_comfyui.sh` - ComfyUI and extensions
 - `install/install_ollama.sh` - Ollama and AI models
+- `install/install_openai_media.sh` - OpenAI DALL-E and future Sora API
+- `install/install_gemini.sh` - Google Gemini AI
 - `install/install_additional_tools.sh` - Video processing tools
 
-### Agents
+### AI Agents
 - **Trending Topics Agent** - Researches viral content opportunities
 - **Video Generation Agent** - Orchestrates video creation workflow
 - **Video Upload Agent** - Handles automated uploads and scheduling
+- **YouTube Shorts Agent** - Creates and optimizes YouTube Shorts
+- **Video Analysis Agent** - Comprehensive video analysis and recommendations
+- **Inpainting Agent** - AI-powered image modification and inpainting
+- **Prompt Enhancement Agent** - Expands prompts into detailed descriptions
+- **Deep Research Agent** - In-depth content research
 
 ### Scripts
-- **API Integrations** - Clients for Sora, OpenRouter, Ollama, ComfyUI
+- **API Integrations** - Clients for Sora, OpenRouter, Ollama, ComfyUI, Gemini, OpenAI
 - **Video Utilities** - FFmpeg-based video processing functions
+- **Shorts Creator** - Utilities for creating YouTube Shorts
 
 ### Workflows
 - **ComfyUI Workflows** - Pre-configured JSON workflows for various generation tasks
+- **Inpainting Workflows** - Image modification workflows
 - **Main Orchestrator** - Complete automation pipeline
+
+### Sample Content
+- **Prompt Templates** - Professional prompt templates for various styles
+- **Sample Prompts** - High-quality example prompts
 
 ## 🎯 Supported Platforms
 
-### Video Generation
+### Video & Image Generation
 - ✅ **Sora** (OpenAI) - When API becomes available
-- ✅ **ComfyUI** - Local Stable Diffusion, AnimateDiff, and more
+- ✅ **DALL-E 3** (OpenAI) - High-quality image generation
+- ✅ **Gemini Pro & Pro Vision** (Google) - Text and image understanding
+- ✅ **ComfyUI** - Local Stable Diffusion, AnimateDiff, Inpainting, and more
 - ✅ **OpenRouter** - Access to various free AI models
+- ✅ **Ollama** - Local LLM for script and content generation
+- 🔧 Extensible to other platforms
 - ✅ **Ollama** - Local LLM for script and content generation
 - 🔧 Extensible to other platforms
 
@@ -94,13 +121,16 @@ python examples/basic_workflow.py
 
 ### Upload Platforms
 - ✅ YouTube (with OAuth2)
-- 🔧 Extensible to TikTok, Instagram, Twitter, etc.
+- ✅ YouTube Shorts (optimized format)
+- 🔧 Extensible to TikTok, Instagram Reels, Twitter, etc.
 
 ## 📚 Documentation
 
 Comprehensive documentation is available in the `docs/` directory:
 
 - **[Complete Documentation](docs/README.md)** - Full guide with all features
+- **[YouTube Shorts Guide](docs/YOUTUBE_SHORTS.md)** - Creating and optimizing Shorts
+- **[AI Agents Guide](docs/AI_AGENTS.md)** - Using and creating AI agents
 - **[Workflow Documentation](workflows/README.md)** - ComfyUI workflow usage
 - **Configuration Examples** - Sample configs for various use cases
 
@@ -108,7 +138,8 @@ Comprehensive documentation is available in the `docs/` directory:
 
 To use all features, you'll need API keys for:
 
-- **OpenAI** (for Sora, when available) - https://platform.openai.com/
+- **OpenAI** (for DALL-E, Sora when available) - https://platform.openai.com/
+- **Google AI** (for Gemini) - https://makersuite.google.com/app/apikey
 - **OpenRouter** (for free models) - https://openrouter.ai/
 - **YouTube Data API** (for uploads) - https://console.cloud.google.com/
 - **Anthropic** (optional) - https://www.anthropic.com/
@@ -121,14 +152,24 @@ Add them to `config/config.yaml` after installation.
 ```
 sora_video_maker/
 ├── install/              # Installation scripts
+│   ├── install_all.sh
+│   ├── install_comfyui.sh
+│   ├── install_gemini.sh
+│   └── install_openai_media.sh
 ├── agents/               # AI agents for automation
 │   ├── trending_topics_agent.py
 │   ├── video_generation_agent.py
-│   └── video_upload_agent.py
+│   ├── youtube_shorts_agent.py
+│   ├── video_analysis_agent.py
+│   ├── inpainting_agent.py
+│   └── prompt_enhancement_agent.py
 ├── scripts/              # Utility scripts
 │   ├── api_integrations.py
-│   └── video_utils.py
+│   ├── video_utils.py
+│   ├── openai_tools/
+│   └── gemini_tools/
 ├── workflows/            # ComfyUI workflow definitions
+├── prompts/              # Prompt templates and samples
 ├── config/               # Configuration files
 ├── examples/             # Example usage scripts
 ├── docs/                 # Documentation
