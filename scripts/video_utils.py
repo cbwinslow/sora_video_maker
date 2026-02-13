@@ -5,8 +5,7 @@ Utility functions for video processing and manipulation
 import os
 import subprocess
 import logging
-from typing import Optional, Tuple, List, Dict
-from pathlib import Path
+from typing import Optional, List, Dict
 
 logging.basicConfig(level=logging.INFO)
 logger = logging.getLogger(__name__)
@@ -23,9 +22,9 @@ def get_video_info(video_path: str) -> Optional[Dict]:
             '-show_streams',
             video_path
         ]
-        
+
         result = subprocess.run(cmd, capture_output=True, text=True)
-        
+
         if result.returncode == 0:
             import json
             return json.loads(result.stdout)
@@ -48,9 +47,9 @@ def resize_video(input_path: str, output_path: str, width: int = 1920, height: i
             '-y',
             output_path
         ]
-        
+
         result = subprocess.run(cmd, capture_output=True)
-        
+
         if result.returncode == 0:
             logger.info(f"Video resized successfully: {output_path}")
             return True
@@ -68,11 +67,11 @@ def concatenate_videos(video_paths: List[str], output_path: str) -> bool:
         # Create temporary file list
         list_file = 'temp/concat_list.txt'
         os.makedirs('temp', exist_ok=True)
-        
+
         with open(list_file, 'w') as f:
             for path in video_paths:
                 f.write(f"file '{os.path.abspath(path)}'\n")
-        
+
         cmd = [
             'ffmpeg',
             '-f', 'concat',
@@ -82,9 +81,9 @@ def concatenate_videos(video_paths: List[str], output_path: str) -> bool:
             '-y',
             output_path
         ]
-        
+
         result = subprocess.run(cmd, capture_output=True)
-        
+
         if result.returncode == 0:
             logger.info(f"Videos concatenated successfully: {output_path}")
             return True
@@ -113,9 +112,9 @@ def add_audio_to_video(video_path: str, audio_path: str, output_path: str) -> bo
             '-y',
             output_path
         ]
-        
+
         result = subprocess.run(cmd, capture_output=True)
-        
+
         if result.returncode == 0:
             logger.info(f"Audio added successfully: {output_path}")
             return True
@@ -131,7 +130,7 @@ def extract_frames(video_path: str, output_dir: str, fps: int = 1) -> bool:
     """Extract frames from video at specified fps"""
     try:
         os.makedirs(output_dir, exist_ok=True)
-        
+
         cmd = [
             'ffmpeg',
             '-i', video_path,
@@ -139,9 +138,9 @@ def extract_frames(video_path: str, output_dir: str, fps: int = 1) -> bool:
             '-y',
             os.path.join(output_dir, 'frame_%04d.png')
         ]
-        
+
         result = subprocess.run(cmd, capture_output=True)
-        
+
         if result.returncode == 0:
             logger.info(f"Frames extracted to: {output_dir}")
             return True
@@ -166,9 +165,9 @@ def create_video_from_images(image_dir: str, output_path: str, fps: int = 30) ->
             '-y',
             output_path
         ]
-        
+
         result = subprocess.run(cmd, capture_output=True)
-        
+
         if result.returncode == 0:
             logger.info(f"Video created successfully: {output_path}")
             return True
@@ -189,9 +188,9 @@ def add_text_overlay(video_path: str, output_path: str, text: str, position: str
             'bottom': 'x=(w-text_w)/2:y=h-th-50',
             'center': 'x=(w-text_w)/2:y=(h-text_h)/2'
         }
-        
+
         pos = positions.get(position, positions['top'])
-        
+
         cmd = [
             'ffmpeg',
             '-i', video_path,
@@ -200,9 +199,9 @@ def add_text_overlay(video_path: str, output_path: str, text: str, position: str
             '-y',
             output_path
         ]
-        
+
         result = subprocess.run(cmd, capture_output=True)
-        
+
         if result.returncode == 0:
             logger.info(f"Text overlay added: {output_path}")
             return True

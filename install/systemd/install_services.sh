@@ -11,8 +11,8 @@ echo "Installing systemd services for user: $USERNAME"
 
 # Copy service files
 echo "Copying service files..."
-sudo cp systemd/comfyui@.service /etc/systemd/system/
-sudo cp systemd/ollama@.service /etc/systemd/system/
+sudo cp comfyui@.service /etc/systemd/system/
+sudo cp ollama@.service /etc/systemd/system/
 
 # Reload systemd
 echo "Reloading systemd..."

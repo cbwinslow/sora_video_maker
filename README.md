@@ -203,7 +203,8 @@ Check the status of all services:
 ### Starting Services
 
 ```bash
-# Using systemd (Linux)
+# Linux only - systemd services
+# Requires a Linux system with systemd; on macOS/Windows, skip to "Or manually" below.
 sudo systemctl start comfyui@$USER
 sudo systemctl start ollama@$USER
 

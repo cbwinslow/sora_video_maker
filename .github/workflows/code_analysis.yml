@@ -31,11 +31,11 @@ jobs:
     
     - name: Run codebase analyzer
       run: |
-        python scripts/codebase_analyzer.py --output codebase_analysis.md
+        python scripts/codebase_analyzer.py --output codebase_analysis.md || echo "Codebase analysis failed"
     
     - name: Run auto-fix analyzer
       run: |
-        python scripts/auto_fix_errors.py --analyze-only --report quality_analysis.md
+        python scripts/auto_fix_errors.py --analyze-only --report quality_analysis.md || echo "Auto-fix analysis failed"
     
     - name: Upload analysis reports
       uses: actions/upload-artifact@v3
@@ -58,12 +58,24 @@ jobs:
             const codebaseAnalysis = fs.readFileSync('codebase_analysis.md', 'utf8');
             const qualityAnalysis = fs.readFileSync('quality_analysis.md', 'utf8');
             
+            // Truncate reports if too large (GitHub comment limit is 65536 characters)
+            const maxLength = 60000;
+            let truncatedCodebase = codebaseAnalysis;
+            let truncatedQuality = qualityAnalysis;
+            
+            if (codebaseAnalysis.length > maxLength) {
+              truncatedCodebase = codebaseAnalysis.substring(0, maxLength) + '\n\n... (truncated due to size)';
+            }
+            if (qualityAnalysis.length > maxLength) {
+              truncatedQuality = qualityAnalysis.substring(0, maxLength) + '\n\n... (truncated due to size)';
+            }
+            
             comment += '<details>\n<summary>View Codebase Analysis</summary>\n\n';
-            comment += codebaseAnalysis;
+            comment += truncatedCodebase;
             comment += '\n</details>\n\n';
             
             comment += '<details>\n<summary>View Quality Analysis</summary>\n\n';
-            comment += qualityAnalysis;
+            comment += truncatedQuality;
             comment += '\n</details>\n';
           } catch (error) {
             comment += '⚠️ Error loading analysis reports\n';

@@ -91,52 +91,50 @@ if ! python -c "import pytest" 2>/dev/null; then
 fi
 
 # Build pytest command
-PYTEST_CMD="pytest"
+PYTEST_CMD=(pytest)
 
 # Add verbosity
 if [ "$VERBOSE" = true ]; then
-    PYTEST_CMD="$PYTEST_CMD -v"
+    PYTEST_CMD+=(-v)
 fi
 
 # Add parallel execution
 if [ "$PARALLEL" = true ]; then
-    PYTEST_CMD="$PYTEST_CMD -n auto"
+    PYTEST_CMD+=(-n auto)
 fi
 
 # Add coverage
 if [ "$COVERAGE" = true ]; then
-    PYTEST_CMD="$PYTEST_CMD --cov=agents --cov=scripts --cov=crews --cov=main"
-    PYTEST_CMD="$PYTEST_CMD --cov-report=html --cov-report=term --cov-report=xml"
+    PYTEST_CMD+=(--cov=agents --cov=scripts --cov=crews --cov=main)
+    PYTEST_CMD+=(--cov-report=html --cov-report=term --cov-report=xml)
 fi
 
 # Set test selection based on mode
 case $RUN_MODE in
     all)
         echo -e "${YELLOW}Running all tests...${NC}"
-        TEST_SELECTION="tests/"
+        TEST_SELECTION=(tests/)
         ;;
     unit)
         echo -e "${YELLOW}Running unit tests...${NC}"
-        TEST_SELECTION="tests/unit/ tests/test_initialization.py -m unit"
+        TEST_SELECTION=(tests/unit/ tests/test_initialization.py -m unit)
         ;;
     integration)
         echo -e "${YELLOW}Running integration tests...${NC}"
-        TEST_SELECTION="tests/integration/ tests/test_agent_communication.py tests/test_system_integration.py -m integration"
+        TEST_SELECTION=(tests/integration/ tests/test_agent_communication.py tests/test_system_integration.py -m integration)
         ;;
     fast)
         echo -e "${YELLOW}Running fast tests...${NC}"
-        TEST_SELECTION="tests/ -m 'not slow and not api'"
+        TEST_SELECTION=(tests/ -m "not slow and not api")
         ;;
 esac
 
-# Final command
-FULL_CMD="$PYTEST_CMD $TEST_SELECTION --tb=short"
-
-echo -e "${YELLOW}Command:${NC} $FULL_CMD"
+# Final command (for display)
+echo -e "${YELLOW}Command:${NC} ${PYTEST_CMD[@]} ${TEST_SELECTION[@]} --tb=short"
 echo ""
 
 # Run tests
-if eval $FULL_CMD; then
+if "${PYTEST_CMD[@]}" "${TEST_SELECTION[@]}" --tb=short; then
     echo ""
     echo -e "${GREEN}======================================${NC}"
     echo -e "${GREEN}All tests passed! ✓${NC}"
