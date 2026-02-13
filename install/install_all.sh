@@ -143,6 +143,35 @@ setup_config() {
     fi
 }
 
+# Install optional AI platforms
+install_optional_platforms() {
+    print_status "Optional AI platform installation..."
+    echo ""
+    echo "Would you like to install optional AI platforms?"
+    echo "1) OpenAI (DALL-E, GPT-4 Vision, Sora when available)"
+    echo "2) Google Gemini (Gemini Pro, Pro Vision)"
+    echo "3) Both"
+    echo "4) Skip"
+    echo ""
+    read -p "Choose (1-4): " platform_choice
+    
+    case $platform_choice in
+        1)
+            bash ./install/install_openai_media.sh
+            ;;
+        2)
+            bash ./install/install_gemini.sh
+            ;;
+        3)
+            bash ./install/install_openai_media.sh
+            bash ./install/install_gemini.sh
+            ;;
+        *)
+            print_status "Skipping optional platforms"
+            ;;
+    esac
+}
+
 # Main installation flow
 main() {
     echo ""
@@ -153,7 +182,7 @@ main() {
     check_permissions
     
     # Create necessary directories
-    mkdir -p logs output temp
+    mkdir -p logs output temp output/shorts output/images output/prompts prompts
     
     # Run installations
     install_system_deps
@@ -162,6 +191,7 @@ main() {
     install_comfyui
     install_ollama
     install_additional_tools
+    install_optional_platforms
     setup_config
     
     echo ""
@@ -169,10 +199,18 @@ main() {
     print_status "Installation Complete!"
     print_status "================================"
     echo ""
+    print_status "New Features Available:"
+    echo "  • YouTube Shorts creation and analysis"
+    echo "  • Image inpainting workflows"
+    echo "  • AI-powered prompt enhancement"
+    echo "  • Video analysis and segmentation"
+    echo ""
     print_status "Next steps:"
     echo "  1. Edit config/config.yaml with your API keys"
     echo "  2. Activate the virtual environment: source venv/bin/activate"
-    echo "  3. Run the example workflow: python examples/basic_workflow.py"
+    echo "  3. Try creating Shorts: python examples/create_shorts.py"
+    echo "  4. Try prompt enhancement: python examples/prompt_enhancement_demo.py"
+    echo "  5. Run the basic workflow: python examples/basic_workflow.py"
     echo ""
     print_status "For more information, see docs/README.md"
 }
