@@ -1,0 +1,139 @@
+# CodeRabbit Configuration
+# https://docs.coderabbit.ai/guides/review-instructions/
+
+# Language and response settings
+language: en-US
+early_access: true
+enable_free_tier: true
+
+# Review settings
+reviews:
+  # Request changes on critical issues
+  request_changes_workflow: true
+  
+  # Review profile
+  profile: assertive
+  
+  # What to review
+  auto_review:
+    enabled: true
+    drafts: false
+    base_branches:
+      - main
+      - develop
+  
+  # Review focus areas
+  high_level_summary: true
+  poem: false
+  review_status: true
+  
+  # Collapse reviews after addressing
+  collapse_walkthrough: false
+  
+  # Path-based review settings
+  path_filters:
+    - path: "tests/**"
+      instructions: |
+        - Check test coverage and completeness
+        - Verify test isolation and independence
+        - Ensure proper use of fixtures and mocks
+        - Check for test documentation
+    
+    - path: "agents/**"
+      instructions: |
+        - Verify agent communication patterns
+        - Check error handling and recovery
+        - Ensure proper async/await usage
+        - Validate configuration handling
+    
+    - path: "scripts/**"
+      instructions: |
+        - Check for security vulnerabilities
+        - Verify error handling
+        - Ensure proper logging
+        - Check for code reusability
+    
+    - path: "**/*.md"
+      instructions: |
+        - Check documentation completeness
+        - Verify code examples are correct
+        - Ensure links are valid
+
+# Chat settings
+chat:
+  auto_reply: true
+
+# Code quality checks
+knowledge_base:
+  learnings:
+    scope: global
+  opt_out: false
+
+# Tone and style
+tone_instructions: |
+  - Be direct and constructive
+  - Focus on actionable feedback
+  - Prioritize security and reliability
+  - Consider maintainability and scalability
+
+# Review instructions
+review_instructions: |
+  ## General Guidelines
+  
+  1. **Security First**: Flag any security vulnerabilities immediately
+  2. **Test Coverage**: Ensure adequate test coverage for new code
+  3. **Documentation**: Verify that complex logic is documented
+  4. **Error Handling**: Check that errors are properly handled
+  5. **Performance**: Consider performance implications
+  6. **Maintainability**: Assess code clarity and maintainability
+  
+  ## Agent-Specific Reviews
+  
+  For agent code:
+  - Verify proper initialization and cleanup
+  - Check agent communication patterns
+  - Ensure proper state management
+  - Validate configuration usage
+  - Check for race conditions in async code
+  
+  ## Test-Specific Reviews
+  
+  For test code:
+  - Verify test independence
+  - Check for proper mocking
+  - Ensure test names are descriptive
+  - Validate test coverage
+  - Check for test flakiness
+  
+  ## Priority Levels
+  
+  - 🔴 CRITICAL: Security vulnerabilities, data loss risks
+  - 🟡 HIGH: Bugs, incorrect logic, missing tests
+  - 🟢 MEDIUM: Code quality, performance improvements
+  - 🔵 LOW: Style, documentation, minor improvements
+
+# File patterns to ignore
+ignore_patterns:
+  - "**/*.pyc"
+  - "**/__pycache__/**"
+  - "**/venv/**"
+  - "**/env/**"
+  - "**/node_modules/**"
+  - "**/.pytest_cache/**"
+  - "**/htmlcov/**"
+  - "**/*.log"
+
+# Auto-approve settings
+auto_approve:
+  enabled: false  # Require manual approval
+
+# Code generation settings
+code_generation:
+  enabled: true
+  instructions: |
+    When generating code:
+    - Follow existing code style and patterns
+    - Include proper error handling
+    - Add docstrings and comments
+    - Include type hints where applicable
+    - Add tests for new functionality

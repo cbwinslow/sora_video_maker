@@ -8,7 +8,7 @@ import sys
 import tempfile
 import shutil
 from pathlib import Path
-from unittest.mock import Mock, AsyncMock, patch
+from unittest.mock import AsyncMock, patch
 from typing import Dict, Any
 
 # Add parent directory to path
@@ -142,7 +142,7 @@ def mock_aiohttp_session():
                 ]
             }
         })
-        
+
         mock_session.return_value.__aenter__.return_value.get.return_value.__aenter__.return_value = mock_response
         yield mock_session
 
@@ -193,12 +193,12 @@ def setup_test_directories(temp_dir):
         'logs',
         'temp'
     ]
-    
+
     for directory in test_dirs:
         os.makedirs(os.path.join(temp_dir, directory), exist_ok=True)
-    
+
     yield
-    
+
     # Cleanup after test
     for directory in test_dirs:
         dir_path = os.path.join(temp_dir, directory)
@@ -225,13 +225,13 @@ def sample_script():
     """Sample video script"""
     return """
     Title: Test Video
-    
+
     Introduction:
     Welcome to this test video!
-    
+
     Main Content:
     This is the main content of the video.
-    
+
     Conclusion:
     Thanks for watching!
     """

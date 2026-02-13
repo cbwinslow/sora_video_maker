@@ -1,0 +1,69 @@
+name: 📝 Documentation Issue
+description: Report missing or incorrect documentation
+title: "[DOCS] "
+labels: ["documentation", "needs-triage"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Help us improve documentation!
+  
+  - type: dropdown
+    id: type
+    attributes:
+      label: Documentation Type
+      description: What type of documentation needs work?
+      options:
+        - API Documentation
+        - User Guide
+        - Architecture Documentation
+        - Code Comments
+        - README
+        - Configuration Guide
+        - Testing Guide
+        - Other
+    validations:
+      required: true
+  
+  - type: textarea
+    id: location
+    attributes:
+      label: Location
+      description: Where is this documentation?
+      placeholder: docs/AGENTS.md, line 50
+    validations:
+      required: true
+  
+  - type: dropdown
+    id: issue_type
+    attributes:
+      label: Issue Type
+      description: What's wrong with the documentation?
+      options:
+        - Missing
+        - Incorrect
+        - Incomplete
+        - Outdated
+        - Unclear
+    validations:
+      required: true
+  
+  - type: textarea
+    id: description
+    attributes:
+      label: Description
+      description: Describe the documentation issue
+    validations:
+      required: true
+  
+  - type: textarea
+    id: suggestion
+    attributes:
+      label: Suggested Improvement
+      description: How should this be documented?
+  
+  - type: textarea
+    id: additional
+    attributes:
+      label: Additional Context
+      description: Any other information

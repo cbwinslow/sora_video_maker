@@ -1,0 +1,83 @@
+name: 🔴 Code Quality Issue
+description: Report a code quality, linting, or style issue
+title: "[QUALITY] "
+labels: ["code-quality", "needs-triage"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Report code quality issues found by linters, analyzers, or manual review.
+  
+  - type: dropdown
+    id: tier
+    attributes:
+      label: Fix Difficulty
+      description: How difficult is this to fix?
+      options:
+        - Easy (whitespace, imports)
+        - Medium (formatting, refactoring)
+        - Hard (logic, security)
+    validations:
+      required: true
+  
+  - type: dropdown
+    id: tool
+    attributes:
+      label: Detection Tool
+      description: Which tool detected this issue?
+      options:
+        - flake8
+        - pylint
+        - bandit
+        - black
+        - isort
+        - manual review
+        - other
+    validations:
+      required: true
+  
+  - type: textarea
+    id: files
+    attributes:
+      label: Affected Files
+      description: List the files with issues
+      placeholder: |
+        - agents/trending_topics_agent.py
+        - scripts/video_utils.py
+    validations:
+      required: true
+  
+  - type: textarea
+    id: issues
+    attributes:
+      label: Issues Found
+      description: Describe the issues in detail
+      placeholder: |
+        agents/trending_topics_agent.py:13:1: F401 'os' imported but unused
+        agents/trending_topics_agent.py:24:1: W293 blank line contains whitespace
+    validations:
+      required: true
+  
+  - type: textarea
+    id: solution
+    attributes:
+      label: Suggested Fix
+      description: How should these issues be fixed?
+      placeholder: |
+        - Remove unused imports
+        - Run black formatter
+        - Apply manual fixes for logic issues
+  
+  - type: checkbox
+    id: autofix
+    attributes:
+      label: Can be auto-fixed?
+      description: Can this be fixed automatically?
+      options:
+        - label: Yes, can be auto-fixed
+  
+  - type: textarea
+    id: additional
+    attributes:
+      label: Additional Context
+      description: Any other information
