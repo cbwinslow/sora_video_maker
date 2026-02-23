@@ -247,3 +247,62 @@ def sample_metadata():
         'category': 'Technology',
         'privacy': 'public'
     }
+
+
+@pytest.fixture
+def sample_subtitle_data():
+    """Sample subtitle/caption data"""
+    return [
+        {'start': 0.0, 'end': 2.5, 'text': 'Welcome to this video.'},
+        {'start': 2.5, 'end': 5.0, 'text': 'This is a test subtitle.'},
+        {'start': 5.0, 'end': 8.0, 'text': 'Thank you for watching!'}
+    ]
+
+
+@pytest.fixture
+def sample_audio_analysis():
+    """Sample audio analysis results"""
+    return {
+        'codec': 'aac',
+        'sample_rate': 44100,
+        'channels': 2,
+        'bitrate': 192000,
+        'duration': 60.0,
+        'loudness': {'input_i': '-15.5'},
+        'quality_score': 'Excellent'
+    }
+
+
+@pytest.fixture
+def sample_quality_report():
+    """Sample video quality report"""
+    return {
+        'valid': True,
+        'score': 90.0,
+        'metrics': {
+            'width': 1920,
+            'height': 1080,
+            'fps': 30.0,
+            'bitrate': 1500000,
+            'duration': 60.0
+        },
+        'checks': {
+            'file_integrity': 'pass',
+            'video_specs': 'pass',
+            'audio_specs': 'pass'
+        },
+        'errors': [],
+        'warnings': []
+    }
+
+
+# Pytest markers
+def pytest_configure(config):
+    """Register custom markers"""
+    config.addinivalue_line("markers", "slow: mark test as slow running")
+    config.addinivalue_line("markers", "integration: mark test as integration test")
+    config.addinivalue_line("markers", "unit: mark test as unit test")
+    config.addinivalue_line("markers", "agent: mark test as agent test")
+    config.addinivalue_line("markers", "audio: mark test as audio processing test")
+    config.addinivalue_line("markers", "video: mark test as video processing test")
+    config.addinivalue_line("markers", "quality: mark test as quality assurance test")
