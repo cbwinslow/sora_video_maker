@@ -1,0 +1,92 @@
+# Sample Video and Image Generation Prompts
+# High-quality prompts for various styles and content types
+
+# Cinematic Video Prompts
+cinematic:
+  - prompt: "A lone astronaut walking across a vast alien desert at sunset, cinematic wide shot, shot on ARRI Alexa, 35mm lens, golden hour lighting, dramatic shadows, ultra detailed, 8k"
+    style: "cinematic"
+    duration: 10
+    aspect_ratio: "16:9"
+  
+  - prompt: "Cyberpunk cityscape at night, neon lights reflecting on wet streets, flying cars in the distance, volumetric fog, blade runner aesthetic, cinematic establishing shot, 8k ultra detailed"
+    style: "cinematic"
+    duration: 15
+    aspect_ratio: "16:9"
+  
+  - prompt: "Ancient temple in a misty jungle, golden light streaming through trees, moss-covered stone ruins, cinematic dolly shot, mysterious atmosphere, dramatic lighting, photorealistic, 8k"
+    style: "cinematic"
+    duration: 12
+    aspect_ratio: "16:9"
+
+# YouTube Shorts Prompts (Vertical Format)
+shorts:
+  - prompt: "Quick cooking tutorial, overhead shot, vibrant colorful ingredients, fast-paced editing, professional food photography, vertical format 9:16, high contrast, appetizing"
+    style: "tutorial"
+    duration: 30
+    aspect_ratio: "9:16"
+  
+  - prompt: "Travel montage of tropical beach, crystal clear water, palm trees swaying, sunset colors, energetic vibe, vertical format, Instagram-worthy shots, 4k quality"
+    style: "travel"
+    duration: 45
+    aspect_ratio: "9:16"
+  
+  - prompt: "Fitness workout demonstration, athlete in action, dynamic angles, motivational energy, vertical video format, clean modern aesthetic, professional gym lighting"
+    style: "fitness"
+    duration: 60
+    aspect_ratio: "9:16"
+
+# Artistic / Stylized Prompts
+artistic:
+  - prompt: "Ethereal fantasy landscape, floating islands in the sky, magical waterfalls, aurora borealis colors, trending on artstation, digital art masterpiece, highly detailed"
+    style: "fantasy"
+    type: "image"
+  
+  - prompt: "Steampunk workshop interior, intricate brass machinery, warm candlelight, Victorian era aesthetic, detailed mechanical parts, oil painting style, rich textures"
+    style: "steampunk"
+    type: "image"
+  
+  - prompt: "Minimalist geometric abstract art, pastel color palette, clean lines, modern design, balanced composition, trending on behance, 4k quality"
+    style: "abstract"
+    type: "image"
+
+# Character Prompts
+characters:
+  - prompt: "Portrait of a wise wizard, long flowing beard, intricate robes with magical symbols, mysterious eyes, atmospheric lighting, fantasy character design, highly detailed, 8k"
+    type: "portrait"
+  
+  - prompt: "Futuristic cyborg warrior, half human half machine, neon accents, determined expression, dramatic side lighting, cyberpunk aesthetic, concept art quality"
+    type: "portrait"
+  
+  - prompt: "Friendly cartoon mascot character, cute and approachable, bright colors, simple design, professional 3D render, Pixar style, appealing to all ages"
+    type: "character"
+
+# Negative Prompts (Things to Avoid)
+negative_prompts:
+  general:
+    - "low quality, blurry, pixelated, distorted, disfigured, bad anatomy, poorly drawn"
+    - "amateur, unprofessional, low resolution, watermark, signature, text overlay"
+    - "artifacts, noise, compression, grainy, out of focus"
+  
+  realistic:
+    - "cartoon, anime, painting, drawing, illustration, CGI, 3D render"
+    - "unrealistic, fake, artificial, stylized"
+  
+  artistic:
+    - "photorealistic, photograph, realistic, plain, boring"
+    - "simple, basic, undetailed"
+
+# Quality Enhancement Keywords
+quality_modifiers:
+  technical:
+    - "8k ultra HD"
+    - "4k resolution"
+    - "photorealistic"
+    - "highly detailed"
+    - "sharp focus"
+    - "professional photography"
+  
+  artistic:
+    - "masterpiece"
+    - "award winning"
+    - "trending on artstation"
+    - "best quality"
